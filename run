@@ -1,5 +1,15 @@
 #!/bin/bash
 
 echo compiling
-g++ -g prog.cpp && echo done compiling && xclip -sel clip -o | ./a.out
+g++ -g prog.cpp || exit 1;
+echo done compiling
+if [[ $# -ge 1 ]]; then
+  # read from stdin
+  echo reading from stdin
+  ./a.out
+else
+  # read from clipboard
+  echo reading from xclip
+  xclip -sel clip -o | ./a.out
+fi
 
